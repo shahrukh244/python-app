@@ -1,0 +1,3 @@
+Flask
+PyMySQL # Or mysqlclient, or mysql-connector-python
+werkzeug

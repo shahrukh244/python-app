@@ -1,0 +1,56 @@
+# 13-flask-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+  namespace: python-app
+spec:
+  replicas: 1 # Number of application instances
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+      - name: flask-app
+        # Use the exact image name and tag you just built and pushed
+        image: glb:5000/python-app:V5 # <-- IMPORTANT: Using your built image
+        ports:
+        - containerPort: 5000 # Flask's default listening port
+        env:
+        # Environment variable for Flask's SECRET_KEY
+        - name: FLASK_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: flask-app-secret
+              key: flask-secret-key
+        
+        # Environment variables for MySQL database connection
+        # Your Flask app (app.py) must be updated to use these to connect to MySQL.
+        - name: MYSQL_HOST
+          value: mysql # Name of the MySQL Kubernetes Service (from 7-mysql-service.yaml)
+        - name: MYSQL_DATABASE
+          value: login_db # Name of the database (from 5-mysql-configmap.yaml)
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: flask-app-secret
+              key: mysql-user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: flask-app-secret
+              key: mysql-password
+        
+        # Define resource requests and limits for better cluster management
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+

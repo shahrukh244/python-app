@@ -5,7 +5,7 @@ metadata:
   name: flask-app
   namespace: python-app
 spec:
-  replicas: 3 # Number of application instances
+  replicas: 1 # Number of application instances
   selector:
     matchLabels:
       app: flask-app

@@ -17,7 +17,7 @@ spec:
       containers:
       - name: flask-app
         # Use the exact image name and tag you just built and pushed
-        image: glb:5000/python-app:V5 # <-- IMPORTANT: Using your built image
+        image: registry.kube.lan/python-app:V1 # <-- IMPORTANT: Using your built image
         ports:
         - containerPort: 5000 # Flask's default listening port
         env:

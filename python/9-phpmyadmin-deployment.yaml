@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: phpmyadmin
-        image: glb:5000/phpmyadmin:5.2.2
+        image: registry.kube.lan/phpmyadmin:5.2.2
         ports:
         - containerPort: 80
         envFrom:

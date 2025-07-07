@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: glb:5000/mysql:8.0
+        image: registry.kube.lan/mysql:8.0
         ports:
         - containerPort: 3306
         env:
